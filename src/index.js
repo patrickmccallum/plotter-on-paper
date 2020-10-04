@@ -9,10 +9,11 @@ const App = () => {
   const [rows, setRows] = useState(11);
   const [noise, setNoise] = useState(5);
   const [size, setSize] = useState(50);
+  const [topDown, setTopDown] = useState(true);
 
   useEffect(() => {
     draw();
-  }, [cols, rows, noise, size]);
+  }, [cols, rows, noise, size, topDown]);
 
   const draw = () => {
     // Shortcut the canvas, and get a 2d context on it
@@ -41,7 +42,11 @@ const App = () => {
       // Loop through each col in the row
       for (let col = 0; col < cols; col++) {
         // Calc variance and rotation
-        const variance = (Math.random() * (noise * row) * Math.PI) / 180;
+        const variance =
+          (Math.random() *
+            (topDown ? noise * row : noise * (rows - row)) *
+            Math.PI) /
+          180;
         const thisRotation = (Math.random() < 0.5 ? -variance : variance) / 4;
 
         // Move to the right
@@ -65,37 +70,45 @@ const App = () => {
 
   return (
     <div className="App">
-      <div>
-        Cols
-        <input
-          type="number"
-          name="cols"
-          defaultValue={cols}
-          onChange={(event) => setCols(parseInt(event.target.value, 10))}
-        />
-        Rows
-        <input
-          type="number"
-          name="rows"
-          defaultValue={rows}
-          onChange={(event) => setRows(parseInt(event.target.value, 10))}
-        />
-        Noise
-        <input
-          type="number"
-          name="noise"
-          defaultValue={noise}
-          onChange={(event) => setNoise(parseInt(event.target.value, 10))}
-        />
-        Size
-        <input
-          type="number"
-          name="size"
-          defaultValue={size}
-          onChange={(event) => setSize(parseInt(event.target.value, 10))}
-        />
+      <div className="controls">
+        <div>
+          Cols
+          <input
+            type="number"
+            name="cols"
+            defaultValue={cols}
+            onChange={(event) => setCols(parseInt(event.target.value, 10))}
+          />
+        </div>
+        <div>
+          Rows
+          <input
+            type="number"
+            name="rows"
+            defaultValue={rows}
+            onChange={(event) => setRows(parseInt(event.target.value, 10))}
+          />
+        </div>
+        <div>
+          Noise
+          <input
+            type="number"
+            name="noise"
+            defaultValue={noise}
+            onChange={(event) => setNoise(parseInt(event.target.value, 10))}
+          />
+        </div>
+        <div>
+          Size
+          <input
+            type="number"
+            name="size"
+            defaultValue={size}
+            onChange={(event) => setSize(parseInt(event.target.value, 10))}
+          />
+        </div>
       </div>
-      <div>
+      <div onClick={() => setTopDown(!topDown)}>
         <canvas ref={canvasRef} width="600" height="600" x="0" y="0" />
       </div>
     </div>
