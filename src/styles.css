@@ -7,3 +7,28 @@ body {
   background: #333;
   color: #fff;
 }
+
+.controls {
+  display: flex;
+}
+
+.controls > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  flex-direction: column;
+  padding: 10px;
+  color: #ccc;
+}
+
+.controls input {
+  width: 50px;
+  margin-top: 10px;
+  background: #222;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  text-align: center;
+  color: #4a4a4a;
+}
